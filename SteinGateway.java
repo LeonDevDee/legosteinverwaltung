@@ -9,16 +9,25 @@ public class SteinGateway
 {
     private DatabaseConnector db;
     
+    /**
+     * Konstruktor für den Steingateway
+     */
     public SteinGateway(){
         db = null;
     }
     
+    /**
+     * Methode zur Verbindung des Programms mit der Datenbank
+     */
     public void verbinde(){
         if(db == null){
             db = new DatabaseConnector("", 0, "legosteine","", "");
         }
     }
     
+    /**
+     * Methode zur Trennung des Programms mit der Datenbank
+     */
     public void beende(){
         if(db != null){
             db.close();
@@ -26,12 +35,20 @@ public class SteinGateway
         }    
     }
     
+    /**
+     * Erzeugung der Tabelle falls sie noch nicht existiert
+     */
     public void erzeugeTabelle(){
         verbinde();
-        db.executeStatement("CREATE TABLE IF NOT EXISTS legosteine(bezeichnung SERIAL PRIMARY_KEY, preisProStueck INT, beschreibung VARCHAR(255), kategorie VARCHAR(255))");
+        db.executeStatement("CREATE TABLE IF NOT EXISTS legosteine(bezeichnung SERIAL PRIMARY_KEY, preisProStueck DOUBLE, beschreibung VARCHAR(255), anzahl INT, kategorie VARCHAR(255))");
         beende();
     }
     
+    /**
+     * Gibt den Stein mit der gegebnen Bezichnung zurück
+     * @param bez Bezeichnung des gesuchten Steines
+     * @return den Stein, mit der entsprechenden Bezeichnung
+     */
     public Stein hole(String bez){
         verbinde();
         db.executeStatement("SELECT * FROM legosteine WHERE bezeichnung = " + bez);
