@@ -16,6 +16,7 @@ public class SteinGateway
         db = null;
     }
     
+    
     /**
      * Methode zur Verbindung des Programms mit der Datenbank
      */
@@ -57,5 +58,53 @@ public class SteinGateway
         beende();
         return stein;
     }
+    /**
+     * Gibt eine Liste mit allen Steinen zurück
+     * 
+     * @return eine Liste mit allen Steinen
+     */
+
+    public List<Stein> holeAlle(){
+         verbinde();
+        db.executeStatement("SELECT * FROM legosteine" );
+        QueryResult qr = db.getCurrentQueryResult();
+        List<Stein> steine = new List<Stein>();
+        
+        for(int i = 0; i < qr.getColumnCount(); i++)
+        {
+         steine.append(new Stein(qr.getData()[i][0], Double.parseDouble(qr.getData()[i][1]), qr.getData()[i][2], Integer.parseInt(qr.getData()[i][3]), qr.getData()[i][4])); 
+        }
+        
+        beende();
+        return steine;
+    }
+    /**
+     * fügt einen Stein hinzu
+     * @param s übergebener Stein
+     * @return void
+     */
+    public void hinzufügen(Stein s){
+        verbinde();
+        db.executeStatement("INSERT INTO legosteine " + "VALUES ( '" + s.gibBezeichnung() + "' ," + s.gibPreisProStueck() +", '" + s.gibBeschreibung()+ "', '" + s.gibKategorie()+ "', " + s.gibAnzahl() +  "" );
+        beende();          
+    }
     
-}
+    /**
+     * löscht den Stein mit der entsprechenden Bezeichnung
+     * @param Bezeichnung Bezeichnung des gesuchten Steines
+     * @return void
+     */
+    public void loesche(String Bezeichnung){
+        verbinde();
+        db.executeStatement("DELETE FROM legosteine WHERE bezeichnung = " + Bezeichnung);  
+        beende();  
+    }
+    
+    
+   
+    
+    
+    }
+    
+    
+
