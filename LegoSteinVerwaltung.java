@@ -20,7 +20,7 @@ public class LegoSteinVerwaltung
       steine = new List<Stein>();
   
       
-      steine = steingateway.holeAlle();
+      //steine = steingateway.holeAlle();
     }
     /**
      * fügt einen Stein zur Datenbank hinzu
