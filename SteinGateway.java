@@ -53,7 +53,7 @@ public class SteinGateway
         verbinde();
         db.executeStatement("SELECT * FROM legosteine WHERE bezeichnung = " + bez);
         QueryResult qr = db.getCurrentQueryResult();
-        Stein stein = new Stein(qr.getData()[0][0], qr.getData()[0][1], qr.getData()[0][2],qr.getData()[0][3]);
+        Stein stein = new Stein(qr.getData()[0][0], Double.parseDouble(qr.getData()[0][1]), qr.getData()[0][2], Integer.parseInt(qr.getData()[0][3]), qr.getData()[0][4]);
         beende();
         return stein;
     }
